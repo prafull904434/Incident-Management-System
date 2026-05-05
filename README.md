@@ -157,3 +157,35 @@ mvn test
 ```
 
 *The test suite covers the incident state machine, rate limiting, asynchronous signal ingestion, and integration workflows.*
+
+---
+
+## Deployment (Render + Vercel)
+
+### Backend on Render (Docker)
+
+This repo includes `backend/Dockerfile`, so Render can deploy it as a Docker service.
+
+1. Create a Render **Web Service** with:
+   - Environment: `Docker`
+   - Root Directory: `backend`
+2. Set environment variables in Render:
+   - `SPRING_PROFILES_ACTIVE=prod`
+   - `DB_URL=jdbc:postgresql://<host>:5432/<db>?sslmode=require`
+   - `DB_USERNAME=<postgres_user>`
+   - `DB_PASSWORD=<postgres_password>`
+   - `MONGODB_URI=<mongodb_connection_uri>`
+3. Deploy and verify:
+   - `https://<render-service>/actuator/health`
+
+> Redis is optional in this project and not required for deployment.
+
+### Frontend on Vercel
+
+1. Import the same GitHub repo in Vercel.
+2. Configure:
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+3. Add environment variable:
+   - `VITE_API_BASE_URL=https://<render-service>`
