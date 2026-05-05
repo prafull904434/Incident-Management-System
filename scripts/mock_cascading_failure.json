@@ -1,0 +1,48 @@
+[
+  {
+    "componentId": "RDBMS_PRIMARY",
+    "componentType": "RDBMS",
+    "errorCode": "CONNECTION_TIMEOUT",
+    "severity": "P0",
+    "message": "Primary PostgreSQL node is unresponsive, connection pool exhausted.",
+    "metadata": {
+      "region": "us-east-1",
+      "host": "db-prod-01",
+      "event": "db_crash"
+    }
+  },
+  {
+    "componentId": "MCP_CONTROLLER_01",
+    "componentType": "API",
+    "errorCode": "DB_CONNECTION_FAILED",
+    "severity": "P0",
+    "message": "Master Control Program failed to connect to database. Critical workflows halted.",
+    "metadata": {
+      "region": "us-east-1",
+      "host": "mcp-prod-app-01",
+      "event": "mcp_failure_cascade"
+    }
+  },
+  {
+    "componentId": "ASYNC_WORKER_POOL",
+    "componentType": "ASYNC_QUEUE",
+    "errorCode": "QUEUE_BACKLOG",
+    "severity": "P1",
+    "message": "Message queue backlog growing rapidly due to downstream MCP failure.",
+    "metadata": {
+      "queue": "main-tasks",
+      "backlog_size": "50000"
+    }
+  },
+  {
+    "componentId": "API_GATEWAY",
+    "componentType": "API",
+    "errorCode": "HTTP_503",
+    "severity": "P1",
+    "message": "Gateway returning 503 Service Unavailable due to backing services failing.",
+    "metadata": {
+      "region": "us-east-1",
+      "endpoint": "/api/v1/checkout"
+    }
+  }
+]
